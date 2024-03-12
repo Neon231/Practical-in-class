@@ -1,0 +1,42 @@
+class Employee:
+    def __init__(self, name, salary, age):
+        self.name = name
+        self.salary = salary
+        self.age = age
+
+def input_employee():
+    name = input("Enter employee name: ")
+    salary = float(input("Enter employee salary: "))
+    age = int(input("Enter employee age: "))
+    return Employee(name, salary, age)
+
+def input_employee_list():
+    num_employees = int(input("Enter the number of employees: "))
+    employees = []
+    for _ in range(num_employees):
+        employees.append(input_employee())
+    return employees
+
+def print_employee_list(employees):
+    for employee in employees:
+        print(f"Name: {employee.name}, Salary: {employee.salary}, Age: {employee.age}")
+
+def main():
+    # Task 1: Print the list of employees
+    employees_list = input_employee_list()
+    print("List of Employees:")
+    print_employee_list(employees_list)
+
+    # Task 2: Sort employees by decreasing age
+    employees_list.sort(key=lambda x: x.age, reverse=True)
+    print("\nList of Employees after sorting by age:")
+    print_employee_list(employees_list)
+
+    # Task 3: Find and sort employees over 18 by decreasing salary
+    over_18_employees = [employee for employee in employees_list if employee.age > 18]
+    over_18_employees.sort(key=lambda x: x.salary, reverse=True)
+    print("\nList of Employees over 18, sorted by salary:")
+    print_employee_list(over_18_employees)
+
+if __name__ == "__main__":
+    main()
