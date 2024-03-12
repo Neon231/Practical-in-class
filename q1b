@@ -1,0 +1,42 @@
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def get_prime_numbers(sequence):
+    prime_numbers = []
+    for num in sequence:
+        if is_prime(num):
+            prime_numbers.append(num)
+    return prime_numbers
+
+def get_largest_prime(sequence):
+    prime_numbers = get_prime_numbers(sequence)
+    if not prime_numbers:
+        return None
+    return max(prime_numbers)
+
+def main():
+    try:
+        sequence = list(map(int, input("Enter a sequence of positive integers separated by spaces: ").split()))
+        if any(num <= 0 for num in sequence):
+            print("Please enter only positive integers.")
+            return
+
+        prime_numbers = get_prime_numbers(sequence)
+        largest_prime = get_largest_prime(sequence)
+
+        print("Prime numbers in the sequence:", prime_numbers)
+        if largest_prime is not None:
+            print("Largest prime number:", largest_prime)
+        else:
+            print("No prime numbers in the sequence.")
+
+    except ValueError:
+        print("Invalid input. Please enter valid positive integers.")
+
+if __name__ == "__main__":
+    main()
