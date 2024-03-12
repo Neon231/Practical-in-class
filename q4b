@@ -1,0 +1,57 @@
+from datetime import datetime
+
+def read_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+        return lines
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return None
+
+def parse_measurement(lines):
+    measurements = []
+    for i in range(0, len(lines), 2):
+        time_str = lines[i].strip()
+        temperature = float(lines[i + 1].strip())
+        measurements.append((time_str, temperature))
+    return measurements
+
+def calculate_averages(measurements):
+    total_daily_temperature = 0
+    morning_count = 0
+    evening_count = 0
+    total_morning_temperature = 0
+    total_evening_temperature = 0
+
+    for time_str, temperature in measurements:
+        time = datetime.strptime(time_str, "%d-%m-%Y %H:%M:%S")
+        total_daily_temperature += temperature
+
+        if 5 <= time.hour < 16:
+            total_morning_temperature += temperature
+            morning_count += 1
+        elif 16 <= time.hour < 22:
+            total_evening_temperature += temperature
+            evening_count += 1
+
+    average_daily_temperature = round(total_daily_temperature / len(measurements), 3)
+    average_morning_temperature = round(total_morning_temperature / morning_count, 3) if morning_count > 0 else 0
+    average_evening_temperature = round(total_evening_temperature / evening_count, 3) if evening_count > 0 else 0
+
+    return average_daily_temperature, average_morning_temperature, average_evening_temperature
+
+def main():
+    file_path = "temp.txt"
+    lines = read_file(file_path)
+
+    if lines is not None:
+        measurements = parse_measurement(lines)
+        if measurements:
+            average_daily, average_morning, average_evening = calculate_averages(measurements)
+            print(f"Average Daily Temperature: {average_daily}°C")
+            print(f"Average Morning Temperature (5:00 to 15:59): {average_morning}°C")
+            print(f"Average Evening Temperature (16:00 to 21:59): {average_evening}°C")
+
+if __name__ == "__main__":
+    main()
