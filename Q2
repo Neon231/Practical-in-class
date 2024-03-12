@@ -1,0 +1,25 @@
+import random
+
+def computer_guess_number():
+    low_limit = 1
+    high_limit = 100
+    guess = 0
+    
+    print("Choose from 1 to 100.")
+    input("Press Enter.")
+    
+    while True:
+        guess = random.randint(low_limit, high_limit)
+        feedback = input(f"Is {guess} too low (l), too high (h), or correct (c)? ").lower()
+        
+        if feedback == 'c':
+            print(f"Guessed {guess} correctly.")
+            break
+        elif feedback == 'l':
+            low_limit = guess + 1
+        elif feedback == 'h':
+            high_limit = guess - 1
+        else:
+            print("Invalid input. Please enter 'l', 'h', or 'c'.")
+#Run the program
+computer_guess_number()
