@@ -1,0 +1,32 @@
+def find_equilibrium_index(arr):
+    total_sum = sum(arr)
+    left_sum = 0
+
+    for i in range(len(arr)):
+        total_sum -= arr[i]
+
+        if left_sum == total_sum:
+            return i
+
+        left_sum += arr[i]
+
+    return -1
+
+def main():
+    try:
+        # Input: array of integers
+        arr = list(map(int, input("Enter the array of integers separated by spaces: ").split()))
+
+        # Check if there exists an equilibrium index
+        equilibrium_index = find_equilibrium_index(arr)
+
+        if equilibrium_index != -1:
+            print("YES, there exists an equilibrium index at position:", equilibrium_index)
+        else:
+            print("NO, there is no equilibrium index in the given array.")
+
+    except ValueError:
+        print("Invalid input. Please enter valid integers.")
+
+if __name__ == "__main__":
+    main()
